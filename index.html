@@ -9,7 +9,7 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
-            background-color: #333333; /* 淺灰色背景 */
+            background-color: #333333;
         }
         .grid-container {
             display: grid;
@@ -19,10 +19,10 @@
             height: 100vh;
         }
         .grid-item {
-            background: #444444; /* 稍深一點的灰色，以區分網格項目 */
+            background: #444444;
             padding: 20px;
             overflow: hidden;
-            border-radius: 10px; /* 添加圓角使設計更現代 */
+            border-radius: 10px;
         }
         iframe {
             width: 100%;
@@ -48,59 +48,83 @@
         .episode:hover {
             background: #1Db954;
         }
-	        header {
-			            height: 100%;
-					                display: flex;
-								            justify-content: center;
-										                align-items: center;
-													        }
-		        .image-container {
-				            max-width: 100%;
-						                max-height: 100%;
-									        }
-			        img {
-					            max-width: 100%;
-							                max-height: 100vh;
-										            display: block;
-												                object-fit: contain;
-															        }
+        header {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-container {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100vh;
+            display: block;
+            object-fit: contain;
+        }
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                height: auto;
+            }
+            .grid-item {
+                height: 50vh;
+            }
+            img {
+                width: 50%;
+                height: auto;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .grid-item {
+                height: 40vh;
+            }
+            img {
+                width: 80%;
+            }
+        }
     </style>
 </head>
 <body>
-	<center>
+    <center>
         <header>
-		        <div class="image-container">
-				            <img src="ysFu-center.png" alt="ysFu center image" width="30%" height="30%">
-					            </div>
-						        </header>
-							<center>
+            <div class="image-container">
+                <img src="ysFu-center.png" alt="ysFu center image" width="30%" height="30%">
+            </div>
+        </header>
+    </center>
 
-								<center>
-									  <p style="color:white;">
-									      來自台灣的前衛電子數字搖滾的鼓手獨奏Project，
-									        </p>
-										  <p style="color:white;">
-										      曲風上融合了Instrumental、Electronic、Fusion、Jazz、Djent、PostRock、MathRock，
-										        </p>
-											  <p style="color:white;">
-											      風格則是充斥神秘、現代感等元素。
-											        </p>
-												
-											  <p style="color:white;">  </p>
-											  <p style="color:white;">  </p>
-											  <p style="color:white;"> </p>
-											  <p style="color:white;"> </p>
-								</center>
+    <center>
+        <p style="color:white;">
+            來自台灣的前衛電子數字搖滾的鼓手獨奏Project，
+        </p>
+        <p style="color:white;">
+            曲風上融合了Instrumental、Electronic、Fusion、Jazz、Djent、PostRock、MathRock，
+        </p>
+        <p style="color:white;">
+            風格則是充斥神秘、現代感等元素。
+        </p>
+        <p style="color:white;"> </p>
+        <p style="color:white;"> </p>
+        <p style="color:white;"> </p>
+        <p style="color:white;"> </p>
+    </center>
 
-								<center>
-									        <header>
-											                        <div class="image-container">
-															                                            <img src="transparent.png" alt="ysFu center image" width="30%" height="30%">
-																				                                                        </div>
-																											                                                        </header>
-																																		                                                        <center>
+    <center>
+        <header>
+            <div class="image-container">
+                <img src="transparent.png" alt="ysFu center image" width="30%" height="30%">
+            </div>
+        </header>
+    </center>
 
-						    <div class="grid-container">
+    <div class="grid-container">
         <div class="grid-item">
             <iframe id="ytplayer" type="text/html" src="https://www.youtube.com/embed/2l0LExE6_cM?autoplay=1&origin=http://example.com"></iframe>
         </div>
@@ -120,7 +144,7 @@
             const element = document.getElementById('embed-iframe');
             const options = {
                 width: '100%',
-                height: '640',
+                height: '100%',
                 uri: 'spotify:artist:1B0P4ANdbWeOUwAu8f7ae3'
             };
             const callback = (EmbedController) => {
