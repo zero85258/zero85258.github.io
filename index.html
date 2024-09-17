@@ -1,81 +1,89 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>A Spotify Embed Example</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    iframe {
-      max-width: 100%;
-      margin-bottom: 1rem;
-    }
-
-    .episodes {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .episode {
-      min-width: max-content;
-      margin-bottom: .8rem;
-      padding: .8rem 1rem;
-      border-radius: 10px;
-      border: 0;
-      background: #191414;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .episode:hover {
-      background: #1Db954;
-    }
-
-    @media screen and (min-width: 860px) {
-      body {
-        flex-direction: column;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>A Spotify Embed Example in 2x2 Grid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
+            height: 100vh;
+        }
+        .grid-item {
+            background: #f0f0f0;
+            padding: 20px;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .episodes {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .episode {
+            min-width: max-content;
+            margin-bottom: .8rem;
+            padding: .8rem 1rem;
+            border-radius: 10px;
+            border: 0;
+            background: #191414;
+            color: #fff;
+            cursor: pointer;
+        }
+        .episode:hover {
+            background: #1Db954;
+        }
+    </style>
 </head>
-
 <body>
-<iframe id="ytplayer" type="text/html" width="100%" height="400"
-        src="https://www.youtube.com/embed/2l0LExE6_cM?autoplay=1&origin=http://example.com" frameborder="0">
-</iframe>
+    <div class="grid-container">
+        <div class="grid-item">
+            <iframe id="ytplayer" type="text/html" src="https://www.youtube.com/embed/2l0LExE6_cM?autoplay=1&origin=http://example.com"></iframe>
+        </div>
+        <div class="grid-item">
+            <div id="embed-iframe"></div>
+        </div>
+        <div class="grid-item">
+            <iframe src="https://embed.music.apple.com/us/album/vortex/1679537474" allow="encrypted-media; fullscreen; clipboard-write;"></iframe>
+        </div>
+        <div class="grid-item">
+            <iframe src="https://streetvoice.com/music/embed/?id=678617&s=l" scrolling="no"></iframe>
+        </div>
+    </div>
 
-<div id="embed-iframe"></div>
-<script src="https://open.spotify.com/embed/iframe-api/v1" async>
-</script>
-<script type="text/javascript">
-    window.onSpotifyIframeApiReady = (IFrameAPI) => {
-      const element = document.getElementById('embed-iframe');
-      const options = {
-        width: '100%',
-        height: '640',
-        uri: 'spotify:artist:1B0P4ANdbWeOUwAu8f7ae3'
-      };
-      const callback = (EmbedController) => {
-        document.querySelectorAll('.episode').forEach(
-          episode => {
-            episode.addEventListener('click', () => {
-              EmbedController.loadUri(episode.dataset.spotifyId)
-            });
-          })
-      };
-      IFrameAPI.createController(element, options, callback);
-    };
-  </script>
-
-<div style="width: 100%; height: 450px; position: relative;">
-  <iframe src="https://embed.music.apple.com/us/album/vortex/1679537474"
-          style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="encrypted-media; fullscreen; clipboard-write;"></iframe>
-</div>
-
-<iframe src="https://streetvoice.com/music/embed/?id=678617&s=l" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+    <script type="text/javascript">
+        window.onSpotifyIframeApiReady = (IFrameAPI) => {
+            const element = document.getElementById('embed-iframe');
+            const options = {
+                width: '100%',
+                height: '320',
+                uri: 'spotify:artist:1B0P4ANdbWeOUwAu8f7ae3'
+            };
+            const callback = (EmbedController) => {
+                document.querySelectorAll('.episode').forEach(
+                    episode => {
+                        episode.addEventListener('click', () => {
+                            EmbedController.loadUri(episode.dataset.spotifyId)
+                        });
+                    }
+                )
+            };
+            IFrameAPI.createController(element, options, callback);
+        };
+    </script>
 </body>
 </html>
-c
