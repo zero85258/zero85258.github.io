@@ -64,6 +64,20 @@
             display: block;
             object-fit: contain;
         }
+/* 	@font-face {
+    font-family: 'MyCustomFont';
+    src: url('fonts/myfont.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+} */
+@font-face {
+  font-family: SweiSansCJKjp-Regular;
+  src: url(https://cdn.jsdelivr.net/gh/max32002/swei-sans@2.102/WebFont/CJK%20JP/SweiSansCJKjp-Regular.woff2) format("woff2")
+  , url(https://cdn.jsdelivr.net/gh/max32002/swei-sans@2.102/WebFont/CJK%20JP/SweiSansCJKjp-Regular.woff) format("woff");
+}
+p {
+    font-family: 'SweiSansCJKjp-Regular', sans-serif;
+}
         @media (max-width: 768px) {
             .grid-container {
                 grid-template-columns: 1fr;
