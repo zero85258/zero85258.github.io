@@ -5,11 +5,27 @@
     <title>ysFu official</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+	    @keyframes gradient {
+    0% {
+        background: linear-gradient(45deg, #ff7e5f, #feb47b);
+    }
+    50% {
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+    }
+    100% {
+        background: linear-gradient(45deg, #ff7e5f, #feb47b);
+    }
+}
+
+/* 将动画应用于背景 */
+
         body {
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
-            background-color: #7a7a76;
+/*             background-color: #7a7a76; */
+		   animation: gradient 5s ease infinite; /* 设置动画的时长和重复模式 */
+    background-size: 200% 200%; /* 扩大背景大小以平滑过渡 */
         }
         .grid-container {
             display: grid;
