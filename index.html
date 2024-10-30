@@ -202,7 +202,7 @@
         /* 页面样式 */
         .custom-cube-container {
             margin: 0;
-            height: 100%;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -217,7 +217,8 @@
             width: 100px;
             height: 100px;
             transform-style: preserve-3d;
-            animation: rotateCube 10s infinite linear;
+            transform: rotateX(0deg) rotateY(0deg);
+            transition: transform 0.2s ease; /* 增加平滑过渡 */
         }
 
         /* 每个面 */
@@ -238,19 +239,6 @@
         .custom-cube-container .left   { transform: rotateY(-90deg) translateZ(50px); }
         .custom-cube-container .top    { transform: rotateX(90deg) translateZ(50px); }
         .custom-cube-container .bottom { transform: rotateX(-90deg) translateZ(50px); }
-
-        /* 立方体旋转动画 */
-        @keyframes rotateCube {
-            0% {
-                transform: rotateX(0deg) rotateY(0deg);
-            }
-            50% {
-                transform: rotateX(180deg) rotateY(180deg);
-            }
-            100% {
-                transform: rotateX(360deg) rotateY(360deg);
-            }
-        }
 
         /* 动态渐变颜色动画 */
         @keyframes gradientAnimation {
@@ -278,6 +266,74 @@
             <div class="face bottom"></div>
         </div>
     </div>
+
+    <script>
+        const cube = document.querySelector('.cube');
+        let startX, startY, currentX = 0, currentY = 0, rotateX = 0, rotateY = 0;
+        let autoRotateX = 0, autoRotateY = 0;
+        let isDragging = false;
+        let autoRotateInterval;
+
+        // 初始化自动旋转
+        function startAutoRotate() {
+            autoRotateInterval = setInterval(() => {
+                if (!isDragging) {
+                    autoRotateX += 1.2; // 控制X轴自转速度
+                    autoRotateY += 2.0; // 控制Y轴自转速度
+                    cube.style.transform = `rotateX(${autoRotateX}deg) rotateY(${autoRotateY}deg)`;
+                }
+            }, 30);
+        }
+
+        // 停止自动旋转
+        function stopAutoRotate() {
+            clearInterval(autoRotateInterval);
+        }
+
+        // 处理触摸和鼠标的开始事件
+        function startDrag(event) {
+            isDragging = true;
+            startX = event.touches ? event.touches[0].clientX : event.clientX;
+            startY = event.touches ? event.touches[0].clientY : event.clientY;
+            stopAutoRotate(); // 停止自动旋转
+            cube.style.transition = "none";
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', endDrag);
+        }
+
+        // 处理拖动事件
+        function drag(event) {
+            const x = event.touches ? event.touches[0].clientX : event.clientX;
+            const y = event.touches ? event.touches[0].clientY : event.clientY;
+            const deltaX = x - startX;
+            const deltaY = y - startY;
+            rotateX = currentX + deltaY * 0.5;
+            rotateY = currentY + deltaX * 0.5;
+            cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        // 处理结束事件
+        function endDrag() {
+            isDragging = false;
+            currentX = rotateX;
+            currentY = rotateY;
+            cube.style.transition = "transform 0.2s ease";
+            startAutoRotate(); // 重新开始自动旋转
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', endDrag);
+        }
+
+        // 添加事件监听器
+        cube.addEventListener('mousedown', startDrag);
+        cube.addEventListener('touchstart', startDrag);
+
+        // 开始自动旋转
+        startAutoRotate();
+    </script>
 </body>
 
 
