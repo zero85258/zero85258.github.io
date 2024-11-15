@@ -30,6 +30,7 @@
 		/* 渐变颜色组合  */
 /* 		background: linear-gradient(90deg, #ff8fd1, #ffbdae, #fbf783, #81ffdd, #7eaeff, #cb9cff); */
 		background: linear-gradient(90deg, #f7ff8f, #dddddd, #777777, #bb81fb);
+		background: linear-gradient(90deg, #dddddd, #f7ff8f, #bb81fb, #444444);
     		background-size: 400% 400%; /* 扩大背景大小以实现流畅的移动效果 */
     		animation: gradientAnimation 5s linear infinite; /* 5秒无限循环动画 */
         }
@@ -176,6 +177,25 @@
         </header>
     </center>
 
+<center>
+<button onclick="changeBackground()">Change Background</button>
+</center>
+
+    <script>
+        const backgrounds = [
+            'linear-gradient(90deg, #f7ff8f, #dddddd, #777777, #bb81fb)',
+            'linear-gradient(90deg, #dddddd, #f7ff8f, #bb81fb, #444444)',
+            'linear-gradient(90deg, #ff8fd1, #ffbdae, #fbf783, #81ffdd, #7eaeff, #cb9cff)',
+            '#7a7a76'
+        ];
+        let currentIndex = 0;
+
+        function changeBackground() {
+            currentIndex = (currentIndex + 1) % backgrounds.length;
+            document.body.style.background = backgrounds[currentIndex];
+        }
+    </script>
+	
     <div class="grid-container">
         <div class="grid-item">
             <iframe id="ytplayer" type="text/html" src="https://www.youtube.com/embed/2l0LExE6_cM?autoplay=1&origin=http://example.com"></iframe>
