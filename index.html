@@ -147,7 +147,22 @@
     <center>
         <header>
             <div class="image-container">
-                <img src="ysFu-center-black.png" alt="ysFu center image" width="60%" height="60%">
+                <img src="ysFu-center-black.png" alt="ysFu center image" width="60%" height="60%"  onclick="changeBackground()">
+		    <script>
+        const backgrounds = [
+            'linear-gradient(90deg, #f7ff8f, #dddddd, #777777, #bb81fb)',
+            'linear-gradient(90deg, #dddddd, #f7ff8f, #bb81fb, #444444)',
+            'linear-gradient(90deg, #ff8fd1, #ffbdae, #fbf783, #81ffdd, #7eaeff, #cb9cff)',
+            '#7a7a76'
+        ];
+        let currentIndex = 0;
+
+        function changeBackground() {
+            currentIndex = (currentIndex + 1) % backgrounds.length;
+            document.body.style.background = backgrounds[currentIndex];
+	    document.body.style.animation: 'gradientAnimation 5s linear infinite';
+        }
+    </script>
             </div>
         </header>
     </center>
@@ -172,7 +187,7 @@
     <center>
         <header>
             <div class="image-container">
-                <img src="transparent.png" alt="ysFu center image" width="30%" height="30%" onclick="changeBackground()">
+                <img src="transparent.png" alt="ysFu center image" width="30%" height="30%">
             </div>
         </header>
     </center>
@@ -181,21 +196,7 @@
 <button onclick="changeBackground()">Change Background</button>
 </center> -->
 
-    <script>
-        const backgrounds = [
-            'linear-gradient(90deg, #f7ff8f, #dddddd, #777777, #bb81fb)',
-            'linear-gradient(90deg, #dddddd, #f7ff8f, #bb81fb, #444444)',
-            'linear-gradient(90deg, #ff8fd1, #ffbdae, #fbf783, #81ffdd, #7eaeff, #cb9cff)',
-            '#7a7a76'
-        ];
-        let currentIndex = 0;
-
-        function changeBackground() {
-            currentIndex = (currentIndex + 1) % backgrounds.length;
-            document.body.style.background = backgrounds[currentIndex];
-	    document.body.style.animation: 'gradientAnimation 5s linear infinite';
-        }
-    </script>
+    
 	
     <div class="grid-container">
         <div class="grid-item">
