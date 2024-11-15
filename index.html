@@ -159,7 +159,7 @@
         window.changeBackground = function changeBackground() {
             currentIndex = (currentIndex + 1) % backgrounds.length;
             document.body.style.background = backgrounds[currentIndex];
-	    document.body.style.animation: 'gradientAnimation 5s linear infinite';
+	    document.body.style.animation = 'gradientAnimation 5s linear infinite';
         }
     </script>
                 <img src="ysFu-center-black.png" alt="ysFu center image" width="60%" height="60%"  onclick="changeBackground()">
