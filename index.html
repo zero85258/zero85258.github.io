@@ -188,7 +188,8 @@
                         document.body.style.animation = 'gradientAnimation 5s linear infinite'; /* 5秒无限循环动画 */
                     }
                 </script>
-                <img src="ysFu-center-black.png" alt="ysFu center image" width="60%" height="60%" onclick="changeBackground()">
+                <img src="ysFu-center-black.png" alt="ysFu center image" width="60%" height="60%"
+                    onclick="changeBackground()">
 
             </div>
         </header>
@@ -219,12 +220,6 @@
         </header>
     </center>
 
-    <!-- <center>
-<button onclick="changeBackground()">Change Background</button>
-</center> -->
-
-
-
     <div class="grid-container">
         <div class="grid-item">
             <iframe id="ytplayer" type="text/html"
@@ -236,7 +231,8 @@
                 src="https://open.spotify.com/embed/artist/1B0P4ANdbWeOUwAu8f7ae3?utm_source=generator&theme=0"
                 width="100%" height="100%" frameBorder="0" allowfullscreen=""
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"></iframe>
+                loading="lazy">
+            </iframe>
         </div>
         <div class="grid-item">
             <iframe src="https://embed.music.apple.com/us/album/vortex/1679537474"
@@ -524,8 +520,10 @@
                         </div>
                     </div>
                 </div>
-                <script
-                    type="module">import e from "https://cdn.skypack.dev/dot-audio@0.1.0"; let AC = new AudioContext, synth = new e.PolySynth(AC, { waveform: "square", filterFrequency: 0, filterAmount: 1e3, filterDecay: .4, filterSustain: 0, filterRelease: .1 }), reverb = new e.Reverb(AC, { amount: .15 }), analyser = AC.createAnalyser(); e.chain(synth, reverb, AC.destination), reverb.connect(analyser); let addClass = (e, t) => { e.className.includes(t) || (e.className += ` ${t}`) }, removeClass = (e, t) => { e.className.includes(t) && (e.className = e.className.replace(` ${t}`, "")) }, keyboard = new e.Keyboard({ onPress(e, t) { "suspended" === AC.state && AC.resume(), addClass(document.getElementById(t.key), "active"), synth.noteOn(`${e.note}${e.octave}`) }, onRelease(e, t) { removeClass(document.getElementById(t.key), "active"), synth.noteOff(`${e.note}${e.octave}`) } }); keyboard.on(); let scopeCtx = document.getElementById("scope").getContext("2d"), spectCtx = document.getElementById("spectrum").getContext("2d"); scopeCtx.canvas.width = 2 * scopeCtx.canvas.clientWidth, spectCtx.canvas.width = 2 * spectCtx.canvas.clientWidth; let drawSpectrum = (e, t) => { let a = t.canvas.width, n = t.canvas.height, s = new Uint8Array(e.frequencyBinCount), l = n / 260; e.getByteFrequencyData(s), t.fillStyle = "rgba(0, 0, 0)", t.fillRect(0, 0, a, n), t.lineWidth = 4, t.strokeStyle = "rgb(255, 255, 255)", t.beginPath(); for (let r = 0; r < a; r++)t.lineTo(120 * Math.log(r) - 140, n - s[r] * l); t.stroke() }, drawScope = (e, t) => { let a = t.canvas.width, n = t.canvas.height, s = new Uint8Array(e.frequencyBinCount), l = n / 256, r = 0; for (e.getByteTimeDomainData(s), t.fillStyle = "rgba(0, 0, 0)", t.fillRect(0, 0, a, n), t.lineWidth = 4, t.strokeStyle = "rgb(255, 255, 255)", t.beginPath(); s[r++] - 128 > 0 && r <= a;); for (r >= a && (r = 0); s[r++] - 128 < .5 && r <= a;); r >= a && (r = 0); for (let c = r; c < s.length && c - r < a; c++)t.lineTo(c - r, 1 * n - s[c] * l); t.stroke() }, draw = () => { drawSpectrum(analyser, spectCtx), drawScope(analyser, scopeCtx), requestAnimationFrame(draw) }; draw();</script>
+                <script type="module">
+                    import e from "https://cdn.skypack.dev/dot-audio@0.1.0"; 
+                    let AC = new AudioContext, synth = new e.PolySynth(AC, { waveform: "square", filterFrequency: 0, filterAmount: 1e3, filterDecay: .4, filterSustain: 0, filterRelease: .1 }), reverb = new e.Reverb(AC, { amount: .15 }), analyser = AC.createAnalyser(); e.chain(synth, reverb, AC.destination), reverb.connect(analyser); let addClass = (e, t) => { e.className.includes(t) || (e.className += ` ${t}`) }, removeClass = (e, t) => { e.className.includes(t) && (e.className = e.className.replace(` ${t}`, "")) }, keyboard = new e.Keyboard({ onPress(e, t) { "suspended" === AC.state && AC.resume(), addClass(document.getElementById(t.key), "active"), synth.noteOn(`${e.note}${e.octave}`) }, onRelease(e, t) { removeClass(document.getElementById(t.key), "active"), synth.noteOff(`${e.note}${e.octave}`) } }); keyboard.on(); let scopeCtx = document.getElementById("scope").getContext("2d"), spectCtx = document.getElementById("spectrum").getContext("2d"); scopeCtx.canvas.width = 2 * scopeCtx.canvas.clientWidth, spectCtx.canvas.width = 2 * spectCtx.canvas.clientWidth; let drawSpectrum = (e, t) => { let a = t.canvas.width, n = t.canvas.height, s = new Uint8Array(e.frequencyBinCount), l = n / 260; e.getByteFrequencyData(s), t.fillStyle = "rgba(0, 0, 0)", t.fillRect(0, 0, a, n), t.lineWidth = 4, t.strokeStyle = "rgb(255, 255, 255)", t.beginPath(); for (let r = 0; r < a; r++)t.lineTo(120 * Math.log(r) - 140, n - s[r] * l); t.stroke() }, drawScope = (e, t) => { let a = t.canvas.width, n = t.canvas.height, s = new Uint8Array(e.frequencyBinCount), l = n / 256, r = 0; for (e.getByteTimeDomainData(s), t.fillStyle = "rgba(0, 0, 0)", t.fillRect(0, 0, a, n), t.lineWidth = 4, t.strokeStyle = "rgb(255, 255, 255)", t.beginPath(); s[r++] - 128 > 0 && r <= a;); for (r >= a && (r = 0); s[r++] - 128 < .5 && r <= a;); r >= a && (r = 0); for (let c = r; c < s.length && c - r < a; c++)t.lineTo(c - r, 1 * n - s[c] * l); t.stroke() }, draw = () => { drawSpectrum(analyser, spectCtx), drawScope(analyser, scopeCtx), requestAnimationFrame(draw) }; draw();
+                </script>
             </body>
 
 
