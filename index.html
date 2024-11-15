@@ -156,7 +156,7 @@
         ];
         let currentIndex = 0;
 
-        function changeBackground() {
+        window.changeBackground = function changeBackground() {
             currentIndex = (currentIndex + 1) % backgrounds.length;
             document.body.style.background = backgrounds[currentIndex];
 	    document.body.style.animation: 'gradientAnimation 5s linear infinite';
