@@ -172,14 +172,14 @@
     <center>
         <header>
             <div class="image-container">
-                <img src="transparent.png" alt="ysFu center image" width="30%" height="30%">
+                <img src="transparent.png" alt="ysFu center image" width="30%" height="30%" onclick="changeBackground()">
             </div>
         </header>
     </center>
 
-<center>
+<!-- <center>
 <button onclick="changeBackground()">Change Background</button>
-</center>
+</center> -->
 
     <script>
         const backgrounds = [
@@ -193,6 +193,7 @@
         function changeBackground() {
             currentIndex = (currentIndex + 1) % backgrounds.length;
             document.body.style.background = backgrounds[currentIndex];
+	    document.body.style.animation: 'gradientAnimation 5s linear infinite';
         }
     </script>
 	
