@@ -651,7 +651,7 @@
 
                 // 註冊字體大小
                 const Size = Quill.import('formats/size');
-                Size.whitelist = ['small', 'normal', false, 'huge']; // false 表示預設 large
+                Size.whitelist = ['small', 'normal', 'large', 'huge']; // false 表示預設 large
                 Quill.register(Size, true);
 
 			    // 初始化 Quill
