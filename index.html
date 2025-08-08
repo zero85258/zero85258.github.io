@@ -642,10 +642,8 @@
 			<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
 			<script>
-			    // 匯入 Font format
+			    // // 註冊允許的字體
 			    const Font = Quill.import('formats/font');
-
-			    // 註冊允許的字體
 			    Font.whitelist = ['superg', 'supercenturyfineseal', 'serif', 'monospace'];
 			    Quill.register(Font, true);
 
