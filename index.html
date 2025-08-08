@@ -597,75 +597,73 @@
 
         <div class="grid-item">
             <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+			<style>
+			  /* 引入 superg_.ttf */
+			  @font-face {
+			    font-family: 'SuperG';
+			    src: url('superg_.ttf') format('truetype');
+			    font-weight: normal;
+			    font-style: normal;
+			  }
 
-<style>
-  /* 引入 superg_.ttf */
-  @font-face {
-    font-family: 'SuperG';
-    src: url('superg_.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+			  /* Quill 字體對應 class */
+			  .ql-font-superg {
+			    font-family: 'SuperG';
+			  }
 
-  /* Quill 字體對應 class */
-  .ql-font-superg {
-    font-family: 'SuperG';
-  }
+			  @font-face {
+			    font-family: 'SuperCenturyFineSeal';
+			    src: url('超世纪细印篆.ttf') format('truetype');
+			    font-weight: normal;
+			    font-style: normal;
+			  }
 
-  @font-face {
-    font-family: 'SuperCenturyFineSeal';
-    src: url('超世纪细印篆.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+			  /* Quill 字體對應 class */
+			  .ql-font-supercenturyfineseal {
+			    font-family: 'SuperCenturyFineSeal';
+			  }
+			</style>
 
-  /* Quill 字體對應 class */
-  .ql-font-supercenturyfineseal {
-    font-family: 'SuperCenturyFineSeal';
-  }
-</style>
+			<!-- Create the editor container -->
+			<div id="editor">
+			  <p>000 Vortex 穿梭記憶的漩渦 (Intro)</p>
+			  <p>001 Sci-Fi 科幻片</p>
+			  <p>002 Devilcent 魔鬼色</p>
+			  <p>003 Xeno 陌生</p>
+			  <p>004 Tortuous 曲折</p>
+			  <p>005 Pathos Journey 悲愴之旅</p>
+			  <p>006 Dreamium 夢製品</p>
+			  <p>007 Flame Operation 烈焰行動</p>
+			  <p>008 Mirroration 鏡像</p>
+			  <p><br /></p>
+			</div>
 
-<!-- Create the editor container -->
-<div id="editor">
-  <p>000 Vortex 穿梭記憶的漩渦 (Intro)</p>
-  <p>001 Sci-Fi 科幻片</p>
-  <p>002 Devilcent 魔鬼色</p>
-  <p>003 Xeno 陌生</p>
-  <p>004 Tortuous 曲折</p>
-  <p>005 Pathos Journey 悲愴之旅</p>
-  <p>006 Dreamium 夢製品</p>
-  <p>007 Flame Operation 烈焰行動</p>
-  <p>008 Mirroration 鏡像</p>
-  <p><br /></p>
-</div>
+			<!-- Include the Quill library -->
+			<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
-<!-- Include the Quill library -->
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+			<script>
+			  // 匯入 Font format
+			  const Font = Quill.import('formats/font');
 
-<script>
-  // 匯入 Font format
-  const Font = Quill.import('formats/font');
+			  // 註冊允許的字體
+			  Font.whitelist = ['superg', 'supercenturyfineseal', 'serif', 'monospace'];
+			  Quill.register(Font, true);
 
-  // 註冊允許的字體
-  Font.whitelist = ['superg', 'supercenturyfineseal', 'serif', 'monospace'];
-  Quill.register(Font, true);
-
-  // 初始化 Quill
-  const quill = new Quill('#editor', {
-    theme: 'snow',
-    modules: {
-      toolbar: [
-        [{ font: Font.whitelist }], // 字體選單
-        [{ size: [] }],
-        ['bold', 'italic', 'underline'],
-        ['link', 'image']
-      ]
-    }
-  });
-  quill.format('font', 'superg');
-  quill.format('size', 'large');
-</script>
-
+			  // 初始化 Quill
+			  const quill = new Quill('#editor', {
+			    theme: 'snow',
+			    modules: {
+			      toolbar: [
+			        [{ font: Font.whitelist }], // 字體選單
+			        [{ size: [] }],
+			        ['bold', 'italic', 'underline'],
+			        ['link', 'image']
+			      ]
+			    }
+			  });
+			  quill.format('font', 'superg');
+			  quill.format('size', 'large');
+			</script>
         </div>
 
         <div class="grid-item">
