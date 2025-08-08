@@ -598,6 +598,21 @@
         <div class="grid-item">
             <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
+<style>
+  /* 引入 superg_.ttf */
+  @font-face {
+    font-family: 'SuperG';
+    src: url('/assets/fonts/superg_.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Quill 字體對應 class */
+  .ql-font-superg {
+    font-family: 'SuperG', sans-serif;
+  }
+</style>
+
 <!-- Create the editor container -->
 <div id="editor">
   <p>Hello World!</p>
@@ -608,12 +623,28 @@
 <!-- Include the Quill library -->
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
-<!-- Initialize Quill editor -->
 <script>
+  // 匯入 Font format
+  const Font = Quill.import('formats/font');
+
+  // 註冊允許的字體
+  Font.whitelist = ['superg', 'serif', 'monospace'];
+  Quill.register(Font, true);
+
+  // 初始化 Quill
   const quill = new Quill('#editor', {
-    theme: 'snow'
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        [{ font: Font.whitelist }], // 字體選單
+        [{ size: [] }],
+        ['bold', 'italic', 'underline'],
+        ['link', 'image']
+      ]
+    }
   });
 </script>
+
         </div>
 
         <div class="grid-item">
