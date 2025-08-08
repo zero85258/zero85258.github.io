@@ -642,12 +642,17 @@
 			<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 
 			<script>
-			  // 匯入 Font format
-			  const Font = Quill.import('formats/font');
+			    // 匯入 Font format
+			    const Font = Quill.import('formats/font');
 
-			  // 註冊允許的字體
-			  Font.whitelist = ['superg', 'supercenturyfineseal', 'serif', 'monospace'];
-			  Quill.register(Font, true);
+			    // 註冊允許的字體
+			    Font.whitelist = ['superg', 'supercenturyfineseal', 'serif', 'monospace'];
+			    Quill.register(Font, true);
+
+                // 註冊字體大小
+                const Size = Quill.import('formats/size');
+                Size.whitelist = ['small', 'normal', false, 'huge']; // false 表示預設 large
+                Quill.register(Size, true);
 
 			  // 初始化 Quill
 			  const quill = new Quill('#editor', {
