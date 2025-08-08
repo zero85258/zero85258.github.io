@@ -611,12 +611,32 @@
   .ql-font-superg {
     font-family: 'SuperG', sans-serif;
   }
+
+  @font-face {
+    font-family: 'SuperCenturyFineSeal';
+    src: url('超世纪细印篆.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Quill 字體對應 class */
+  .ql-font-supercenturyfineseal {
+    font-family: 'SuperCenturyFineSeal', sans-serif;
+  }
 </style>
 
 <!-- Create the editor container -->
 <div id="editor">
-  <p>Hello World!</p>
-  <p>Some initial <strong>bold</strong> text</p>
+  <p>000 Vortex 穿梭記憶的漩渦 (Intro)</p>
+  <p>000 Vortex 穿梭記憶的漩渦 (Intro)</p>
+  <p>001 Sci-Fi 科幻片</p>
+  <p>002 Devilcent 魔鬼色</p>
+  <p>003 Xeno 陌生</p>
+  <p>004 Tortuous 曲折</p>
+  <p>005 Pathos Journey 悲愴之旅</p>
+  <p>006 Dreamium 夢製品</p>
+  <p>007 Flame Operation 烈焰行動</p>
+  <p>008 Mirroration 鏡像</p>
   <p><br /></p>
 </div>
 
@@ -628,7 +648,7 @@
   const Font = Quill.import('formats/font');
 
   // 註冊允許的字體
-  Font.whitelist = ['superg', 'serif', 'monospace'];
+  Font.whitelist = ['superg', 'supercenturyfineseal', 'serif', 'monospace'];
   Quill.register(Font, true);
 
   // 初始化 Quill
