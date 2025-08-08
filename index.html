@@ -654,20 +654,20 @@
                 Size.whitelist = ['small', 'normal', false, 'huge']; // false 表示預設 large
                 Quill.register(Size, true);
 
-			  // 初始化 Quill
-			  const quill = new Quill('#editor', {
-			    theme: 'snow',
-			    modules: {
-			      toolbar: [
-			        [{ font: Font.whitelist }], // 字體選單
-			        [{ size: [] }],
-			        ['bold', 'italic', 'underline'],
-			        ['link', 'image']
-			      ]
-			    }
-			  });
-			  quill.format('font', 'superg');
-			  quill.format('size', 'large');
+			    // 初始化 Quill
+			    const quill = new Quill('#editor', {
+			        theme: 'snow',
+			        modules: {
+			            toolbar: [
+			                [{ font: Font.whitelist }], // 字體選單
+			                [{ size: [] }],
+			                ['bold', 'italic', 'underline'],
+			                ['link', 'image']
+			            ]
+			        }
+			    });
+			    quill.format('font', 'superg');
+			    quill.format('size', 'large');
 			</script>
         </div>
 
