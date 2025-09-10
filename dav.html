@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaVinci Color Warper - Web版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #ff6b35, #f7931e, #ffd23f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .image-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .upload-area {
+            border: 2px dashed #ff6b35;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
+            border-color: #f7931e;
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .upload-area.dragover {
+            border-color: #ffd23f;
+            background: rgba(255, 210, 63, 0.1);
+        }
+
+        .canvas-container {
+            position: relative;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #canvas {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: fit-content;
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-group h3 {
+            color: #ff6b35;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .slider-container {
+            margin-bottom: 15px;
+        }
+
+        .slider-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #333;
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+        }
+
+        .value-display {
+            font-size: 0.8em;
+            color: #aaa;
+            margin-left: 10px;
+        }
+
+        .button-group {
+            display: grid;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .preset-btn {
+            padding: 8px 12px;
+            font-size: 0.8em;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .preset-btn:hover {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: #ff6b35;
+        }
+
+        .color-wheels {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .color-wheel {
+            text-align: center;
+        }
+
+        .wheel {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            cursor: pointer;
+            margin: 0 auto 8px;
+            position: relative;
+        }
+
+        .shadows .wheel { background: conic-gradient(from 0deg, #000, #333, #666, #000); }
+        .midtones .wheel { background: conic-gradient(from 0deg, #444, #777, #aaa, #444); }
+        .highlights .wheel { background: conic-gradient(from 0deg, #888, #bbb, #fff, #888); }
+
+        .wheel-dot {
+            width: 12px;
+            height: 12px;
+            background: #ff6b35;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
+
+        .wheel-label {
+            font-size: 0.8em;
+            color: #ccc;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        #fileInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DaVinci Color Warper</h1>
+            <p>專業級色彩調色工具 - Web版</p>
+        </div>
+
+        <div class="main-content">
+            <div class="image-section">
+                <div class="upload-area" id="uploadArea">
+                    <div style="font-size: 3em; margin-bottom: 10px;">📷</div>
+                    <h3>拖拽圖片到此處或點擊上傳</h3>
+                    <p>支援 JPG, PNG, WEBP 格式</p>
+                    <input type="file" id="fileInput" accept="image/*">
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <div class="control-group">
+                    <h3>色彩輪調整</h3>
+                    <div class="color-wheels">
+                        <div class="color-wheel shadows">
+                            <div class="wheel" data-type="shadows">
+                                <div class="wheel-dot"></div>
+                            </div>
+                            <div class="wheel-label">陰影</div>
+                        </div>
+                        <div class="color-wheel midtones">
+                            <div class="wheel" data-type="midtones">
+                                <div class="wheel-dot"></div>
+                            </div>
+                            <div class="wheel-label">中間調</div>
+                        </div>
+                        <div class="color-wheel highlights">
+                            <div class="wheel" data-type="highlights">
+                                <div class="wheel-dot"></div>
+                            </div>
+                            <div class="wheel-label">高光</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>基本調整</h3>
+                    <div class="slider-container">
+                        <label for="exposure">曝光 <span class="value-display" id="exposureValue">0</span></label>
+                        <input type="range" id="exposure" class="slider" min="-2" max="2" step="0.1" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="contrast">對比度 <span class="value-display" id="contrastValue">0</span></label>
+                        <input type="range" id="contrast" class="slider" min="-1" max="1" step="0.05" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="saturation">飽和度 <span class="value-display" id="saturationValue">0</span></label>
+                        <input type="range" id="saturation" class="slider" min="-1" max="1" step="0.05" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="vibrance">鮮豔度 <span class="value-display" id="vibranceValue">0</span></label>
+                        <input type="range" id="vibrance" class="slider" min="-1" max="1" step="0.05" value="0">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>色調調整</h3>
+                    <div class="slider-container">
+                        <label for="highlights">高光 <span class="value-display" id="highlightsValue">0</span></label>
+                        <input type="range" id="highlights" class="slider" min="-1" max="1" step="0.05" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="shadows">陰影 <span class="value-display" id="shadowsValue">0</span></label>
+                        <input type="range" id="shadows" class="slider" min="-1" max="1" step="0.05" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="temperature">色溫 <span class="value-display" id="temperatureValue">0</span></label>
+                        <input type="range" id="temperature" class="slider" min="-1" max="1" step="0.05" value="0">
+                    </div>
+                    <div class="slider-container">
+                        <label for="tint">色調 <span class="value-display" id="tintValue">0</span></label>
+                        <input type="range" id="tint" class="slider" min="-1" max="1" step="0.05" value="0">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>預設</h3>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" onclick="applyPreset('cinematic')">電影感</button>
+                        <button class="preset-btn" onclick="applyPreset('vintage')">復古</button>
+                        <button class="preset-btn" onclick="applyPreset('vibrant')">鮮豔</button>
+                        <button class="preset-btn" onclick="applyPreset('moody')">憂鬱</button>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="resetAll()">重設</button>
+                    <button class="btn btn-primary" onclick="downloadImage()">下載圖片</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let canvas, ctx, originalImageData, currentImageData;
+        let colorWheelValues = {
+            shadows: { x: 0, y: 0 },
+            midtones: { x: 0, y: 0 },
+            highlights: { x: 0, y: 0 }
+        };
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext('2d');
+            
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+
+            // 檔案上傳
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            uploadArea.addEventListener('drop', handleDrop);
+            fileInput.addEventListener('change', handleFileSelect);
+
+            // 滑桿事件
+            const sliders = ['exposure', 'contrast', 'saturation', 'vibrance', 'highlights', 'shadows', 'temperature', 'tint'];
+            sliders.forEach(slider => {
+                const element = document.getElementById(slider);
+                const valueDisplay = document.getElementById(slider + 'Value');
+                element.addEventListener('input', function() {
+                    valueDisplay.textContent = this.value;
+                    applyFilters();
+                });
+            });
+
+            // 色彩輪事件
+            setupColorWheels();
+        }
+
+        function setupColorWheels() {
+            const wheels = document.querySelectorAll('.wheel');
+            wheels.forEach(wheel => {
+                let isDragging = false;
+                
+                wheel.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    updateWheelPosition(wheel, e);
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging && e.target === wheel) {
+                        updateWheelPosition(wheel, e);
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    isDragging = false;
+                });
+            });
+        }
+
+        function updateWheelPosition(wheel, e) {
+            const rect = wheel.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const radius = rect.width / 2;
+
+            let x = (e.clientX - centerX) / radius;
+            let y = (e.clientY - centerY) / radius;
+
+            // 限制在圓形範圍內
+            const distance = Math.sqrt(x * x + y * y);
+            if (distance > 1) {
+                x = x / distance;
+                y = y / distance;
+            }
+
+            const dot = wheel.querySelector('.wheel-dot');
+            dot.style.left = `${50 + x * 40}%`;
+            dot.style.top = `${50 + y * 40}%`;
+
+            const wheelType = wheel.dataset.type;
+            colorWheelValues[wheelType] = { x, y };
+
+            applyFilters();
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        }
+
+        function handleDragLeave() {
+            this.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                loadImage(files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                loadImage(file);
+            }
+        }
+
+        function loadImage(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // 設置畫布大小
+                    const maxWidth = 800;
+                    const maxHeight = 600;
+                    let { width, height } = img;
+
+                    if (width > maxWidth || height > maxHeight) {
+                        const ratio = Math.min(maxWidth / width, maxHeight / height);
+                        width *= ratio;
+                        height *= ratio;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    canvas.style.display = 'block';
+
+                    // 繪製原始圖像
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // 保存原始像素資料
+                    originalImageData = ctx.getImageData(0, 0, width, height);
+                    currentImageData = ctx.getImageData(0, 0, width, height);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applyFilters() {
+            if (!originalImageData) return;
+
+            const imageData = new ImageData(
+                new Uint8ClampedArray(originalImageData.data),
+                originalImageData.width,
+                originalImageData.height
+            );
+
+            // 獲取滑桿值
+            const exposure = parseFloat(document.getElementById('exposure').value);
+            const contrast = parseFloat(document.getElementById('contrast').value);
+            const saturation = parseFloat(document.getElementById('saturation').value);
+            const vibrance = parseFloat(document.getElementById('vibrance').value);
+            const highlights = parseFloat(document.getElementById('highlights').value);
+            const shadows = parseFloat(document.getElementById('shadows').value);
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const tint = parseFloat(document.getElementById('tint').value);
+
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                let r = data[i];
+                let g = data[i + 1];
+                let b = data[i + 2];
+
+                // 曝光調整
+                if (exposure !== 0) {
+                    const factor = Math.pow(2, exposure);
+                    r *= factor;
+                    g *= factor;
+                    b *= factor;
+                }
+
+                // 對比度調整
+                if (contrast !== 0) {
+                    const factor = (1 + contrast);
+                    r = 128 + factor * (r - 128);
+                    g = 128 + factor * (g - 128);
+                    b = 128 + factor * (b - 128);
+                }
+
+                // 色溫調整
+                if (temperature !== 0) {
+                    if (temperature > 0) {
+                        r += temperature * 30;
+                        b -= temperature * 30;
+                    } else {
+                        r += temperature * 30;
+                        b -= temperature * 30;
+                    }
+                }
+
+                // 色調調整
+                if (tint !== 0) {
+                    g += tint * 30;
+                }
+
+                // 高光和陰影調整
+                const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+                
+                if (highlights !== 0 && luminance > 128) {
+                    const factor = 1 + highlights * (luminance - 128) / 127;
+                    r *= factor;
+                    g *= factor;
+                    b *= factor;
+                }
+
+                if (shadows !== 0 && luminance < 128) {
+                    const factor =
