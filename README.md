@@ -12,3 +12,4 @@ js-beautify -r ./*.html
 
 * [WASM 題目嵌入](https://docs.pingcode.com/baike/2945604)
 * google sheet readonly當資料庫
+* davinci resolve color warper 
