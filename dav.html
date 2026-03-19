@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -233,9 +234,17 @@
             position: relative;
         }
 
-        .shadows .wheel { background: conic-gradient(from 0deg, #000, #333, #666, #000); }
-        .midtones .wheel { background: conic-gradient(from 0deg, #444, #777, #aaa, #444); }
-        .highlights .wheel { background: conic-gradient(from 0deg, #888, #bbb, #fff, #888); }
+        .shadows .wheel {
+            background: conic-gradient(from 0deg, #000, #333, #666, #000);
+        }
+
+        .midtones .wheel {
+            background: conic-gradient(from 0deg, #444, #777, #aaa, #444);
+        }
+
+        .highlights .wheel {
+            background: conic-gradient(from 0deg, #888, #bbb, #fff, #888);
+        }
 
         .wheel-dot {
             width: 12px;
@@ -266,6 +275,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -373,16 +383,25 @@
     <script>
         let canvas, ctx, originalImageData, currentImageData;
         let colorWheelValues = {
-            shadows: { x: 0, y: 0 },
-            midtones: { x: 0, y: 0 },
-            highlights: { x: 0, y: 0 }
+            shadows: {
+                x: 0,
+                y: 0
+            },
+            midtones: {
+                x: 0,
+                y: 0
+            },
+            highlights: {
+                x: 0,
+                y: 0
+            }
         };
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
             canvas = document.getElementById('canvas');
             ctx = canvas.getContext('2d');
-            
+
             setupEventListeners();
         });
 
@@ -416,7 +435,7 @@
             const wheels = document.querySelectorAll('.wheel');
             wheels.forEach(wheel => {
                 let isDragging = false;
-                
+
                 wheel.addEventListener('mousedown', (e) => {
                     isDragging = true;
                     updateWheelPosition(wheel, e);
@@ -455,7 +474,10 @@
             dot.style.top = `${50 + y * 40}%`;
 
             const wheelType = wheel.dataset.type;
-            colorWheelValues[wheelType] = { x, y };
+            colorWheelValues[wheelType] = {
+                x,
+                y
+            };
 
             applyFilters();
         }
@@ -493,7 +515,10 @@
                     // 設置畫布大小
                     const maxWidth = 800;
                     const maxHeight = 600;
-                    let { width, height } = img;
+                    let {
+                        width,
+                        height
+                    } = img;
 
                     if (width > maxWidth || height > maxHeight) {
                         const ratio = Math.min(maxWidth / width, maxHeight / height);
@@ -507,7 +532,7 @@
 
                     // 繪製原始圖像
                     ctx.drawImage(img, 0, 0, width, height);
-                    
+
                     // 保存原始像素資料
                     originalImageData = ctx.getImageData(0, 0, width, height);
                     currentImageData = ctx.getImageData(0, 0, width, height);
@@ -577,7 +602,7 @@
 
                 // 高光和陰影調整
                 const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-                
+
                 if (highlights !== 0 && luminance > 128) {
                     const factor = 1 + highlights * (luminance - 128) / 127;
                     r *= factor;
